@@ -1,0 +1,12 @@
+node_moduels/
+config/
+src/
+docs/
+test/
+dist/APIClient.browser.js
+.editorconfig
+.gitignore
+.babelrc
+.travis.yml
+package-lock.json
+yarn-lock.json

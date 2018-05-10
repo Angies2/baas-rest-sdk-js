@@ -1,0 +1,4 @@
+--reporter spec
+-t 10000
+-s 5000
+##--debug-brk

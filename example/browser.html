@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>APIClient Test</title>
+    <script src="../dist/APIClient.browser.js"></script>
+</head>
+<body>
+SDK BROWSER
+</body>
+<script type="text/javascript">
+    var client = new APIClient({
+        accessId: '1',
+        accessKey: '2',
+        domain:'http://demo.heclouds.com/baasapi',
+        debug: true,
+    });
+    var user = {
+        loginName: 'root',
+        password: 'abcd1234',
+        appToken: 'f8effd1a-17e3-4ed9-a893-1c002e8c78d2'
+    };
+    var promise = client.loginUsingPOST(user);
+    promise.then(function (ret) {
+        console.log(ret)
+    }).catch(function (err) {
+        console.error(err);
+    })
+</script>
+</html>

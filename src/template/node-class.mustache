@@ -1,0 +1,218 @@
+/*jshint -W069 */
+/**
+* {{&description}}
+* @class {{&className}}
+*/
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} {{&className}} = (function(){
+'use strict';
+// add fetch into 'global' or 'window' object
+require('isomorphic-fetch');
+// Promise polyfill for low-level browser only
+require('es6-promise');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} querystring = require('querystring');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} path = require('path');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} lodash = require('lodash');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} crypto = require('crypto');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} CryptoJS = require('crypto-js');
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} uuid = require('uuid');
+
+/**
+* 构造函数
+* @param{string} options.accessId - 密钥ID
+* @param{string} options.accessKey - 由平台系统和accessId一起生成，签名的密钥，严格保密只有平台方和用户知道
+* @param{string} options.domain - BaaS API服务地址（可选）
+* @param{object} options.ca - https证书对象，用于nodejs环境下传入ca证书，浏览器端可忽略（可选）
+* @param{boolean} options.debug - 是否启用debug模式（可以打印出日志）（可选）
+*/
+function {{&className}}(options){
+if(!lodash.isPlainObject(options) || !options.accessKey || !options.accessId){
+throw Error('Illegal parameters: All of options.accessKey and options.accessId is required!');
+}
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} domain = options.domain;
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} ca = options.ca;
+
+this.debug = options.debug;
+this.accessKey = options.accessKey;
+this.accessId = options.accessId;
+this.domain = domain ? domain : '{{&domain}}';
+this.rejectUnauthorized = options.rejectUnauthorized !== false;
+
+if(/^https:\/\//.test(this.domain)){
+this.ca = ca; // For https only
+}
+if(this.domain.length === 0) {
+throw new Error('Domain parameter must be specified as a string.');
+}
+}
+
+/**
+* 日志记录
+* @param msg
+*/
+function logger(ctx, msg){
+if(ctx.debug){
+console.log.apply(console, Array.prototype.slice.call(arguments, 1));
+}
+}
+
+/**
+* 计算出参数签名，并填充authCode到headers
+* @param method
+* @param params
+* @param accessKey
+* @param accessId
+* @param headers
+*/
+function wrap4SignatureKey(method, params, accessKey, accessId, headers){
+if(!Object.keys(params).length){
+logger(this, 'No parameters given', params);
+}
+delete params['sessionToken'];
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} authCode = genAuthCode.call(this, method, accessKey, accessId, undefined, params, undefined);
+logger(this, 'authCode: ', authCode);
+headers['authCode'] = authCode;
+}
+
+/**
+* 生成authCode
+* @param{string} requestMethod
+* @param{string} ak accessKey
+* @param{string} accessId
+* @param{string} nonce 随机字符串
+* @param{object} params
+* @param{string} timestamp
+* @returns {string} authCode（形如：accessId=EUqV2yIU&nonce=B2d1a32w112a3ldkKDKNEN&timestamp=1501661974308&signature=gGORxQcvvKG%2B2kp8%2FwgnRM5nvlA%3D）
+*/
+function genAuthCode(requestMethod, ak, accessId, nonce, params, timestamp) {
+// 1. 获得authPerfixString
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} arr = [];
+arr.push('accessId=' + accessId);
+arr.push('nonce=' + (!nonce ? uuid.v1() : nonce));
+arr.push('timestamp=' + (!timestamp ? Date.now() : timestamp));
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} authPerfixString = arr.join('&');
+logger(this, 'authPrefixString: ', authPerfixString);
+
+// 2. 获得signature
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} signingKey = CryptoJS.HmacSHA1(authPerfixString, ak).toString(CryptoJS.enc.Base64);
+logger(this, 'signingKey: ', signingKey);
+
+// 3. 获取signatureContent
+arr = [];
+
+{{#isES6}}
+for (let key of Object.keys(params).sort()) {
+let value = params[key];
+value = lodash.isArray(value) || lodash.isPlainObject(value) ? JSON.stringify(value) : value;
+arr.push([key, encodeURIComponent(value)].join('='));
+}
+{{/isES6}}
+
+{{^isES6}}
+    var paramsKeyArr = Object.keys(params).sort();
+    for(var i = 0, len = paramsKeyArr.length; i < len; i++){
+    var paramsKey = paramsKeyArr[i];
+    var value = params[paramsKey];
+    value = lodash.isArray(value) || lodash.isPlainObject(value) ? JSON.stringify(value) : value;
+    if(value || lodash.isNumber(value)){
+    arr.push([paramsKey, encodeURIComponent(value)].join('='));
+    }
+    }
+{{/isES6}}
+
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} signatureContent = requestMethod.toUpperCase() + '-' + arr.join('&');
+logger(this, 'signatureContent: ', signatureContent);
+
+// 4. 获得signature
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} signature = CryptoJS.HmacSHA1(signatureContent, signingKey).toString(CryptoJS.enc.Base64);
+return (authPerfixString + '&signature=' + encodeURIComponent(signature));
+}
+
+function mergeQueryParams(parameters, queryParameters) {
+if (parameters.$queryParameters) {
+Object.keys(parameters.$queryParameters)
+.forEach(function(parameterName) {
+{{#isES6}}let{{/isES6}}{{^isES6}}var{{/isES6}} parameter = parameters.$queryParameters[parameterName];
+queryParameters[parameterName] = parameter;
+});
+}
+return queryParameters;
+}
+
+/**
+* HTTP Request
+* @method
+* @name {{&className}}#request
+* @param {object} options
+* @param {string} options.method - http method
+* @param {string} options.url - url to do request
+* @param {object} options.parameters
+* @param {object} options.body - body parameters / object
+* @param {object} options.headers - header parameters
+* @param {object} options.queryParameters - querystring parameters
+* @param {object} options.form - form data object
+*/
+{{&className}}.prototype.request = async function(options){
+var method = options.method,
+url = options.url,
+pathParameter = options.pathParameters,
+body = options.body,
+headers = options.headers,
+queryParameters = options.queryParameters,
+form = options.form,
+uri = this.domain + url,
+agent = undefined;
+
+// 若为https则启用agent对象
+if(/^https:\/\//.test(this.domain)){
+agent = {
+rejectUnauthorized: this.rejectUnauthorized,
+ca: this.ca
+};
+}
+
+// 只对pathParams和queryParams做签名，并自动填充到headers
+wrap4SignatureKey.call(this, method, lodash.assign({}, pathParameter, queryParameters), this.accessKey, this.accessId, headers);
+
+// 适配contentType=application/x-www-form-urlencoded情况
+if (Object.keys(form).length > 0) {
+body = querystring.stringify(Object.assign({}, body, form));
+}else {
+body = JSON.stringify(body);
+}
+// 组装queryParams
+if(Object.keys(queryParameters).length > 0){
+uri = uri + '?' + querystring.stringify(queryParameters);
+}
+logger(this, 'Request: ', JSON.stringify({uri, method, headers, agent, body}));
+
+// 发送请求
+let ret = await fetch(uri, {
+method,
+headers,
+agent,
+body
+});
+let rbody = null;
+if (/^application\/(.*\\+)?json/.test(ret.headers.get('content-type'))) {
+rbody = await ret.json();
+} else {
+rbody = await ret.text();
+}
+logger(this, 'Response: statusCode=%s | statusMessage=%s | rbody=%s',
+ret.status, ret.statusText, JSON.stringify(rbody));
+return {
+status: ret.status,
+statusMessage: ret.statusText,
+response: ret,
+body: rbody
+};
+};
+
+{{#methods}}
+    {{> method}}
+{{/methods}}
+
+return {{&className}};
+})();
+
+module.exports = {{&className}};
