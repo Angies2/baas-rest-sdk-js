@@ -30,6 +30,8 @@ yarn add baas-rest-sdk-js
 ```js
 var APIClient = require('baas-rest-sdk-js');
 var client = new APIClient({
+    accessId:'1',
+    accessKey:'2',
     domain: 'http://demo.heclouds.com/baasapi/', // BaaS API服务地址
     debug: false // 是否打印日志信息
 });
@@ -51,7 +53,6 @@ login({
     password: 'abcd1234',
     appToken: 'f8effd1a-17e3-4ed9-a893-1c002e8c78d2'
 });
-
 ```
 
 - browser
