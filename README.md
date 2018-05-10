@@ -22,7 +22,9 @@ yarn add baas-rest-sdk-js
 
 - 浏览器页面
 ```
-<script src="https://github.com/cmiot-baas/baas-rest-sdk-js/tree/master/dist/APIClient.browser.js"></script>
+// 1.下载APIClient.browser.js文件：https://github.com/cmiot-baas/baas-rest-sdk-js/tree/master/dist/APIClient.browser.js
+// 2.引入js
+<script src="./APIClient.browser.js"></script>
 ```
 
 ### Usage
@@ -64,8 +66,7 @@ login({
 <head>
     <meta charset="UTF-8">
     <title>Demo page</title>
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <script src="https://github.com/cmiot-baas/baas-rest-sdk-js/tree/master/dist/APIClient.browser.js"></script>
+    <script src="./APIClient.browser.js"></script>
 </head>
 <body>
 SDK BROWSER
