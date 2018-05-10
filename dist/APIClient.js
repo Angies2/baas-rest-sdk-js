@@ -1,7 +1,14 @@
 /*jshint -W069 */
 /**
- * demo
+ * APIClient类
  * @class APIClient
+ * @param {object} options - 配置参数
+ * @param {string} options.accessId - 密钥ID
+ * @param {string} options.accessKey - 由平台系统和accessId一起生成，签名的密钥，严格保密只有平台方和用户知道
+ * @param {string} options.domain - BaaS API服务地址
+ * @param {object} [options.ca] - https证书对象，用于nodejs环境下传入ca证书，浏览器端可忽略
+ * @param {boolean} [options.debug] - 是否启用debug模式（可以打印出日志）
+ * @param {boolean} [options.rejectUnauthorized] - 是否忽略证书错误
  */
 var APIClient = (function() {
     'use strict';
@@ -18,11 +25,14 @@ var APIClient = (function() {
 
     /**
      * 构造函数
-     * @param{string} options.accessId - 密钥ID
-     * @param{string} options.accessKey - 由平台系统和accessId一起生成，签名的密钥，严格保密只有平台方和用户知道
-     * @param{string} options.domain - BaaS API服务地址（可选）
-     * @param{object} options.ca - https证书对象，用于nodejs环境下传入ca证书，浏览器端可忽略（可选）
-     * @param{boolean} options.debug - 是否启用debug模式（可以打印出日志）（可选）
+     * @constructor
+     * @param {object} options - 配置参数
+     * @param {string} options.accessId - 密钥ID
+     * @param {string} options.accessKey - 由平台系统和accessId一起生成，签名的密钥，严格保密只有平台方和用户知道
+     * @param {string} options.domain - BaaS API服务地址
+     * @param {object} [options.ca] - https证书对象，用于nodejs环境下传入ca证书，浏览器端可忽略
+     * @param {boolean} [options.debug] - 是否启用debug模式（可以打印出日志）
+     * @param {boolean} [options.rejectUnauthorized] - 是否忽略证书错误
      */
     function APIClient(options) {
         if (!lodash.isPlainObject(options) || !options.accessKey || !options.accessId) {
