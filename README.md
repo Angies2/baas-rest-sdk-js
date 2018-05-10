@@ -1,5 +1,7 @@
 # 轻应用BaaS REST API SDK
 
+[![Build Status](https://travis-ci.org/cmiot-baas/baas-rest-sdk-js.svg?branch=master)](https://travis-ci.org/cmiot-baas/baas-rest-sdk-js)
+
 - [如何使用]
 - [JS API文档](https://github.com/cmiot-baas/baas-rest-sdk-js/tree/master/docs/index.html)
 - [REST API接口文档](http://demo.heclouds.com/baasapi/swagger-ui.html)
