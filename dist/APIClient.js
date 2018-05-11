@@ -14,8 +14,6 @@ var APIClient = (function() {
     'use strict';
     // add fetch into 'global' or 'window' object
     require('isomorphic-fetch');
-    // Promise polyfill for low-level browser only
-    require('es6-promise');
     var querystring = require('querystring');
     var path = require('path');
     var lodash = require('lodash');
@@ -199,7 +197,8 @@ var APIClient = (function() {
             body
         });
         let rbody = null;
-        if (/^application\/(.*\\+)?json/.test(ret.headers.get('content-type'))) {
+        if (/^application\/(.*\\+)?json/.test(ret.headers.get('content-type')) ||
+            /^application\/(.*\\+)?x-www-form-urlencoded/.test(ret.headers.get('content-type'))) {
             rbody = await ret.json();
         } else {
             rbody = await ret.text();
