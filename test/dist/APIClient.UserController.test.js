@@ -13,6 +13,12 @@ describe('dist/APIClient.js', function () {
             this.sessionToken = await util.getSessionToken(client);
         });
 
+        it('v1.0/login 用户登录', async function () {
+            let ret = await client.loginUsingPOST(CONFIG_ENV_TEST.user);
+            assert.ok(ret.response.ok, util.processError(ret, '用户登录失败'));
+            assert.equal(Object.prototype.toString.call(ret.body), '[object Object]', 'body不是一个JSON对象');
+        });
+
         // it('/v1.0/devices 新增设备', async function () {
         //     let ret = await client.addDeviceUsingPOST({
         //         sessionToken: this.sessionToken,

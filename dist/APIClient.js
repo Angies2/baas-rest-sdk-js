@@ -197,10 +197,10 @@ var APIClient = (function() {
             body
         });
         let rbody = null;
-        if (/^application\/(.*\\+)?json/.test(ret.headers.get('content-type')) ||
-            /^application\/(.*\\+)?x-www-form-urlencoded/.test(ret.headers.get('content-type'))) {
+        try {
+            // 默认将对象转换为JSON
             rbody = await ret.json();
-        } else {
+        } catch (e) {
             rbody = await ret.text();
         }
         logger(this, 'Response: statusCode=%s | statusMessage=%s | rbody=%s',
