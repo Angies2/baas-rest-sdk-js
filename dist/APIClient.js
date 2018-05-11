@@ -206,12 +206,16 @@ var APIClient = (function() {
         }
         logger(this, 'Response: statusCode=%s | statusMessage=%s | rbody=%s',
             ret.status, ret.statusText, JSON.stringify(rbody));
-        return {
-            status: ret.status,
-            statusMessage: ret.statusText,
-            response: ret,
-            body: rbody
-        };
+        var promise = new Promise((resolve, reject) => {
+            (ret.ok ? resolve : reject)({
+                status: ret.status,
+                statusMessage: ret.statusText,
+                response: ret,
+                body: rbody
+            });
+        });
+
+        return promise;
     };
 
     /**

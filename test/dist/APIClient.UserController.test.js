@@ -41,19 +41,23 @@ describe('dist/APIClient.js', function () {
             console.log(ret.body);
         });
 
-        // it('/v1.0/devices/info/{deviceId} 编辑设备', async function () {
-        //     let ret = await client.updateDevicesUsingPUT({
-        //         sessionToken: this.sessionToken,
-        //         deviceId: '30972317',
-        //         updateDevice: {
-        //             "deviceGroupId": 0,
-        //             "deviceName": "aaa" + String(parseFloat(Math.random(1).toFixed(3)) * 1000)
-        //         }
-        //     });
-        //     assert.ok(ret.response.ok, util.processError(ret, '编辑设备失败'));
-        //     console.log(ret.body);
-        // });
-        //
+        it('/v1.0/devices/info/{deviceId} 编辑设备', async function () {
+            try {
+                let ret = await client.updateDevicesUsingPUT({
+                    sessionToken: this.sessionToken,
+                    deviceId: '30972317',
+                    updateDevice: {
+                        "deviceGroupId": 0,
+                        "deviceName": "aaa" + String(parseFloat(Math.random(1).toFixed(3)) * 1000)
+                    }
+                });
+                assert.equal(ret.response.status, 200, util.processError(ret, '编辑设备失败'));
+            } catch (e) {
+                console.error(e.body);
+            }
+            // console.log(ret.body);
+        });
+
         // it('/v1.0/devices/{deviceId} 删除设备', async function () {
         //     let ret = await client.deleteDevicesUsingDELETE({
         //         sessionToken: this.sessionToken,
