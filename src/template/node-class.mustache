@@ -32,7 +32,7 @@ require('es6-promise');
 * @param {string} options.domain - BaaS API服务地址
 * @param {object} [options.ca] - https证书对象，用于nodejs环境下传入ca证书，浏览器端可忽略
 * @param {boolean} [options.debug] - 是否启用debug模式（可以打印出日志）
-* @param {boolean} [options.rejectUnauthorized] - 是否忽略证书错误
+* @param {boolean} [options.rejectUnauthorized] - 当https证书错误时（如：自签名），是否拒绝未授权的服务
 */
 function {{&className}}(options){
 if(!lodash.isPlainObject(options) || !options.accessKey || !options.accessId){
