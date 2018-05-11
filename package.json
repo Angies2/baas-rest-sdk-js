@@ -1,6 +1,6 @@
 {
   "name": "baas-rest-sdk-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The js sdk for BaaS REST API, which supports browser and nodejs",
   "main": "index.js",
   "scripts": {
