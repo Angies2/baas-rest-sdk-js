@@ -181,6 +181,10 @@ var APIClient = (function() {
         if (Object.keys(queryParameters).length > 0) {
             uri = uri + '?' + querystring.stringify(queryParameters);
         }
+        // fetch api 不允许get/head方式下，传入body
+        if (method.toUpperCase() === 'GET' || method.toUpperCase() === 'HEAD') {
+            body = undefined;
+        }
         logger(this, 'Request: ', JSON.stringify({
             uri,
             method,
