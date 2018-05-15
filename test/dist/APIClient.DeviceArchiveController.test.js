@@ -14,21 +14,21 @@ describe('dist/APIClient.js', function () {
         });
 
 
-        it('/v1.0/devices/archives 新增设备档案', async function () {
-            try {
-                let ret = await client.addArchivesUsingPOST({
-                    sessionToken: this.sessionToken,
-                    addArchive: {
-                        "archiveName": "Arch_repairing_infos",
-                        "data": {"garage":"garage"},
-                        "deviceId": "30972521"
-                    }
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '新增设备档案失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '新增设备档案失败'));
-            }
-        });
+        // it('/v1.0/devices/archives 新增设备档案', async function () {
+        //     try {
+        //         let ret = await client.addArchivesUsingPOST({
+        //             sessionToken: this.sessionToken,
+        //             addArchive: {
+        //                 "archiveName": "Arch_repairing_infos",
+        //                 "data": {"garage":"garage"},
+        //                 "deviceId": "30972521"
+        //             }
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '新增设备档案失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '新增设备档案失败'));
+        //     }
+        // });
 
 
         it('/v1.0/devices/queryArchives 查询设备档案列表', async function () {
