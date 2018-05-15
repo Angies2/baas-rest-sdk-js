@@ -25,27 +25,27 @@ describe('dist/APIClient.js', function () {
             }
         });
 
-        it('/v1.0/devices/shares 新增设备分享信息', async function () {
-            try {
-                let ret = await client.addDeviceSharesUsingPOST({
-                    sessionToken: this.sessionToken,
-                    request:{
-                        "deviceId": "31035537",
-                        "permissions": [
-                            {
-                                "name": "Trans_z",
-                                "share": "read",
-                                "type": "data"
-                            }
-                        ],
-                        "toUser": "test"
-                    }
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '新增设备分享信息失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '新增设备分享信息失败'));
-            }
-        });
+        // it('/v1.0/devices/shares 新增设备分享信息', async function () {
+        //     try {
+        //         let ret = await client.addDeviceSharesUsingPOST({
+        //             sessionToken: this.sessionToken,
+        //             request:{
+        //                 "deviceId": "31035537",
+        //                 "permissions": [
+        //                     {
+        //                         "name": "Trans_z",
+        //                         "share": "read",
+        //                         "type": "data"
+        //                     }
+        //                 ],
+        //                 "toUser": "test"
+        //             }
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '新增设备分享信息失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '新增设备分享信息失败'));
+        //     }
+        // });
 
         it('/v1.0/devices/shares 查询分享出去的设备列表', async function () {
             try {
@@ -69,17 +69,17 @@ describe('dist/APIClient.js', function () {
             }
         });
 
-        it('/v1.0/devices/shares/{shareId} 收回设备分享', async function () {
-            try {
-                let ret = await client.deleteDeviceSharesUsingDELETE({
-                    sessionToken: this.sessionToken,
-                    shareId: 14
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '收回设备分享失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '收回设备分享失败'));
-            }
-        });
+        // it('/v1.0/devices/shares/{shareId} 收回设备分享', async function () {
+        //     try {
+        //         let ret = await client.deleteDeviceSharesUsingDELETE({
+        //             sessionToken: this.sessionToken,
+        //             shareId: 14
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '收回设备分享失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '收回设备分享失败'));
+        //     }
+        // });
 
         it('/v1.0/devices/shares/{shareId} 查询设备分享信息', async function () {
             try {
