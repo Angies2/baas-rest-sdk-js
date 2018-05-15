@@ -30,7 +30,7 @@ describe('dist/APIClient.js', function () {
                 let ret = await client.addDeviceSharesUsingPOST({
                     sessionToken: this.sessionToken,
                     request:{
-                        "deviceId": "30992772",
+                        "deviceId": "31035537",
                         "permissions": [
                             {
                                 "name": "Trans_z",
@@ -73,7 +73,7 @@ describe('dist/APIClient.js', function () {
             try {
                 let ret = await client.deleteDeviceSharesUsingDELETE({
                     sessionToken: this.sessionToken,
-                    shareId: 12
+                    shareId: 14
                 });
                 assert.equal(ret.status, 200, util.processError(ret, '收回设备分享失败'));
             } catch (e) {
