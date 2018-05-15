@@ -8,7 +8,6 @@ const CONFIG_ENV_TEST = require('../../config/test.config');
 const client = new APIClient(CONFIG_ENV_TEST.options);
 
 describe('dist/APIClient.js', function () {
-
     describe('角色相关API', function () {
         before(async function () {
             this.sessionToken = await util.getSessionToken(client);
