@@ -52,30 +52,30 @@ describe('dist/APIClient.js', function () {
         });
 
 
-        it('/v1.0/devices/archivesByDeviceId 删除设备档案', async function () {
-            try {
-                let ret = await client.deleteArchiveByDeviceIdUsingDELETE({
-                    sessionToken: this.sessionToken,
-                    archiveName: 'Arch_repairing_infos',
-                    deviceId: '30972521'
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '删除设备档案失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '删除设备档案失败'));
-            }
-        });
+        // it('/v1.0/devices/archivesByDeviceId 删除设备档案', async function () {
+        //     try {
+        //         let ret = await client.deleteArchiveByDeviceIdUsingDELETE({
+        //             sessionToken: this.sessionToken,
+        //             archiveName: 'Arch_repairing_infos',
+        //             deviceId: '30972521'
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '删除设备档案失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '删除设备档案失败'));
+        //     }
+        // });
 
-        it('/v1.0/devices/archivesByDeviceId 根据设备id查询设备档案', async function () {
-            try {
-                let ret = await client.findSingleArchiveByDeviceIdUsingGET({
-                    sessionToken: this.sessionToken,
-                    archiveName: 'Arch_repairing_infos',
-                    deviceId: '30972521'
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '根据设备id查询设备档案失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '根据设备id查询设备档案失败'));
-            }
-        });
+        // it('/v1.0/devices/archivesByDeviceId 根据设备id查询设备档案', async function () {
+        //     try {
+        //         let ret = await client.findSingleArchiveByDeviceIdUsingGET({
+        //             sessionToken: this.sessionToken,
+        //             archiveName: 'Arch_repairing_infos',
+        //             deviceId: '30972521'
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '根据设备id查询设备档案失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '根据设备id查询设备档案失败'));
+        //     }
+        // });
     });
 });
