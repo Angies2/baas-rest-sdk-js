@@ -12,18 +12,18 @@ describe('dist/APIClient.js', function () {
         before(async function () {
             this.sessionToken = await util.getSessionToken(client);
         });
-        it('/v1.0/devices/commands/send 查询命令状态列表', async function () {
-            try {
-                let ret = await client.getCommandStatusListUsingGET({
-                    sessionToken: this.sessionToken,
-                    pageNum: 1,
-                    pageSize: 10
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '查询命令状态列表失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '查询命令状态列表失败'));
-            }
-        });
+        // it('/v1.0/devices/commands/send 查询命令状态列表', async function () {
+        //     try {
+        //         let ret = await client.getCommandStatusListUsingGET({
+        //             sessionToken: this.sessionToken,
+        //             pageNum: 1,
+        //             pageSize: 10
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '查询命令状态列表失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '查询命令状态列表失败'));
+        //     }
+        // });
 
         // it('/v1.0/devices/commands/send 发送命令', async function () {
         //     try {
@@ -41,17 +41,17 @@ describe('dist/APIClient.js', function () {
         //     }
         // });
 
-        it('/v1.0/devices/commands/send/{cmdUuid} 查询命令状态', async function () {
-            try {
-                let ret = await client.getCommandStatusByCmdUuidUsingGET({
-                    sessionToken: this.sessionToken,
-                    cmdUuid: "1",
-                    pageSize: 10
-                });
-                assert.equal(ret.status, 200, util.processError(ret, '查询命令状态失败'));
-            } catch (e) {
-                assert.equal(e.status, 200, util.processError(e, '查询命令状态失败'));
-            }
-        });
+        // it('/v1.0/devices/commands/send/{cmdUuid} 查询命令状态', async function () {
+        //     try {
+        //         let ret = await client.getCommandStatusByCmdUuidUsingGET({
+        //             sessionToken: this.sessionToken,
+        //             cmdUuid: "1",
+        //             pageSize: 10
+        //         });
+        //         assert.equal(ret.status, 200, util.processError(ret, '查询命令状态失败'));
+        //     } catch (e) {
+        //         assert.equal(e.status, 200, util.processError(e, '查询命令状态失败'));
+        //     }
+        // });
     });
 });
